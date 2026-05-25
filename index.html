@@ -34,12 +34,12 @@
         }
 
         .container {
-            width: 92%;
+            width: 90%;
             max-width: 400px;
             background: var(--glass);
             backdrop-filter: blur(15px);
             border-radius: 30px;
-            padding: 35px 20px;
+            padding: 40px 20px;
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.2);
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
@@ -52,7 +52,7 @@
         .moon-icon {
             font-size: 60px;
             filter: drop-shadow(0 0 15px var(--gold));
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: inline-block;
             animation: pulse 2s infinite alternate;
         }
@@ -68,24 +68,10 @@
         }
 
         .name-display {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 1.5rem;
             color: #00ffcc;
-            margin-bottom: 15px;
-            min-height: 40px;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-        }
-
-        .wish-text {
-            font-size: 1.05rem;
-            color: #e0e0e0;
-            line-height: 1.6;
             margin-bottom: 20px;
-            font-style: italic;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 12px;
-            border-radius: 15px;
-            border-left: 3px solid var(--gold);
+            min-height: 40px;
         }
 
         input {
@@ -98,7 +84,6 @@
             text-align: center;
             outline: none;
             margin-bottom: 20px;
-            font-size: 1rem;
         }
 
         button {
@@ -111,32 +96,28 @@
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            font-size: 1rem;
         }
 
         button:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--gold); }
 
         /* Salami Box Section */
-        #gift-section { display: none; margin-top: 10px; }
+        #gift-section { display: none; margin-top: 20px; }
         
         .gift-box {
             font-size: 80px;
             cursor: pointer;
             transition: 0.5s;
-            margin: 15px 0;
         }
 
         .gift-box:hover { transform: rotate(15deg) scale(1.2); }
 
         .revealed-salami {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: #fff;
             background: rgba(255, 215, 0, 0.2);
             padding: 15px;
             border-radius: 15px;
             display: none;
-            margin-top: 15px;
-            font-weight: bold;
             animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -165,13 +146,6 @@
         <h1>Eid Mubarak</h1>
         <div class="name-display" id="displayName">শুভেচ্ছান্তে আপনার নাম</div>
         
-        <!-- আনাবিয়ার জন্য বিশেষ শুভেচ্ছা বার্তা (লিংক দিয়ে ঢুকলে এটি দেখাবে) -->
-        <div id="specialWish" class="wish-text" style="display: none;">
-            "আকাশে উঠেছে নতুন চাঁদ, নিয়ে এলো খুশির রাত।<br>
-            সবাইকে জানাই ঈদের দাওয়াত, সুন্দর কাটুক দিন-রাত।"<br>
-            <strong style="color: var(--gold); font-style: normal; display:block; margin-top:5px;">ঈদ মোবারক, আনাবিয়া ইসলাম! ✨</strong>
-        </div>
-        
         <div id="input-area">
             <input type="text" id="userName" placeholder="আপনার নাম লিখুন">
             <br>
@@ -179,7 +153,7 @@
         </div>
 
         <div id="gift-section">
-            <p style="font-size: 1.1rem; color: #ffeb3b;">আপনার ঈদ সেলামি নিতে বক্সে ট্যাপ করুন!</p>
+            <p>আপনার ঈদ সেলামি নিতে বক্সে ট্যাপ করুন!</p>
             <div class="gift-box" id="box" onclick="revealSalami()">🎁</div>
             <div class="revealed-salami" id="salamiResult"></div>
             <a href="#" class="wa-btn" id="waLink" target="_blank">WhatsApp-এ শেয়ার করুন 🚀</a>
@@ -187,50 +161,38 @@
     </div>
 
     <script>
-        let finalName = "";
-
-        // পেজ লোড হতেই চেক করবে লিংক-এ নাম আছে কিনা
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const nameParam = urlParams.get('name');
-
-            if (nameParam) {
-                finalName = decodeURIComponent(nameParam);
-                
-                // নাম যদি 'আনাবিয়া ইসলাম' বা 'আনাবিয়া' হয় তবে স্পেশাল কবিতা দেখাবে
-                if(finalName.includes("আনাবিয়া")) {
-                    document.getElementById('specialWish').style.display = 'block';
-                }
-                
-                startMagic(finalName);
-            }
-        };
-
         function createMagic() {
-            const inputName = document.getElementById('userName').value;
-            if (!inputName) { alert("নাম না লিখলে ম্যাজিক হবে না!"); return; }
-            finalName = inputName;
-            startMagic(finalName);
-        }
+            const name = document.getElementById('userName').value;
+            if (!name) { alert("নাম না লিখলে ম্যাজিক হবে না!"); return; }
 
-        function startMagic(name) {
             document.getElementById('displayName').innerText = "শুভেচ্ছান্তে: " + name;
             document.getElementById('input-area').style.display = 'none';
             document.getElementById('gift-section').style.display = 'block';
-            
-            // ব্যাকগ্রাউন্ড মিউজিক প্লে করার চেষ্টা
-            document.getElementById('bgMusic').play().catch(error => {
-                console.log("Autoplay blocked. Will play on click.");
-            });
+            document.getElementById('bgMusic').play();
 
-            // আতশবাজি ইফেক্ট
+            // Firework effect
             var duration = 5 * 1000;
             var end = Date.now() + duration;
 
             (function frame() {
-                confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FFD700', '#ffffff', '#00ffcc'] });
-                confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FFD700', '#ffffff', '#00ffcc'] });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#FFD700', '#ffffff']
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#FFD700', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
             }());
         }
 
@@ -241,22 +203,23 @@
             const box = document.getElementById('box');
             const result = document.getElementById('salamiResult');
             const waBtn = document.getElementById('waLink');
-
-            document.getElementById('bgMusic').play().catch(() => {});
+            const name = document.getElementById('userName').value;
 
             box.style.display = 'none';
-            result.innerHTML = "আপনি পেয়েছেন <br><span style='color:#FFD700; font-size:2.2rem;'>৳" + prize + "</span> সালামি! 💸";
+            result.innerText = "আপনি পেয়েছেন ৳" + prize + " সালামি! 💸";
             result.style.display = 'block';
             waBtn.style.display = 'inline-block';
 
-            const baseUrl = window.location.href.split('?')[0];
-            const shareUrl = ${baseUrl}?name=${encodeURIComponent(finalName)};
-            
-            const message = ${finalName} আপনাকে একটি ম্যাজিক্যাল ঈদ গিফট পাঠিয়েছে! 🌙\nআপনিও আপনার সেলামি বুঝে নিন এই লিংকে ক্লিক করে: ${shareUrl};
+            // Create share link
+            const message = ${name} আপনাকে একটি ম্যাজিক্যাল ঈদ গিফট পাঠিয়েছে! 🌙\nআপনিও আপনার সেলামি বুঝে নিন এই লিংকে ক্লিক করে: ${window.location.href};
             waBtn.href = "https://wa.me/?text=" + encodeURIComponent(message);
 
-            // বড় করে কনফেটি ব্লাস্ট
-            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            // Blast more confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
         }
     </script>
 </body>
